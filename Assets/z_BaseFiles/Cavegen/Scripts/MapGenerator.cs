@@ -316,11 +316,11 @@ public class MapGenerator : MonoBehaviour {
 	void RandomFillMap() {
 		if (useRandomSeed) {
 			seed = Time.time.ToString();
-		}
+        }
 
 		System.Random pseudoRandom = new System.Random(seed.GetHashCode());
 
-		for (int x = 0; x < width; x ++) {
+        for (int x = 0; x < width; x ++) {
 			for (int y = 0; y < height; y ++) {
 				if (x == 0 || x == width-1 || y == 0 || y == height -1) {
 					map[x,y] = 1;
