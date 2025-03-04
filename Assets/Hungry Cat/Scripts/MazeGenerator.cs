@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.AI.Navigation;
+
 public class MazeGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -22,7 +23,8 @@ public class MazeGenerator : MonoBehaviour
     private MazeCell[,] _mazeGrid;
 
     void Start()
-    { if (_useSeed)
+    {
+        if (_useSeed)
         {
             Random.InitState(_seed);
         }
@@ -41,7 +43,7 @@ public class MazeGenerator : MonoBehaviour
             for (int z = 0; z < _mazeDepth; z++)
             {
                 _mazeGrid[x, z] = Instantiate(_mazeCellPrefab, new Vector3(x, 0, z), Quaternion.identity, transform);
-                _mazeGrid[x, z].transform.localPosition = new Vector3(x, 0, 2);
+                _mazeGrid[x, z].transform.localPosition = new Vector3(x, 0, z);
             }
         }
 
@@ -82,7 +84,7 @@ public class MazeGenerator : MonoBehaviour
         if (x + 1 < _mazeWidth)
         {
             var cellToRight = _mazeGrid[x + 1, z];
-            
+
             if (cellToRight.IsVisited == false)
             {
                 yield return cellToRight;
@@ -155,5 +157,4 @@ public class MazeGenerator : MonoBehaviour
             return;
         }
     }
-
 }
