@@ -9,9 +9,8 @@ using Random = UnityEngine.Random;
 public class MazeBuilder : MonoBehaviour 
 {
 
-    public GameObject player; // Reference to your player prefab
-    public GameObject npcPrefab, waypointsPrefab; // Reference to your NPC prefab
-    public GameObject groundObject;
+    public GameObject player; 
+    public GameObject npcPrefab, waypointsPrefab;     public GameObject groundObject;
     public int width;
     public int height;
 
@@ -29,8 +28,8 @@ public class MazeBuilder : MonoBehaviour
     int[,] map;
 
     [SerializeField] public NavMeshSurface surface;
-    [SerializeField] private float raycastHeight = 50f; // Height above the plane from which to cast rays.
-    [SerializeField] private int maxAttempts = 1000; // Safety limit to avoid an infinite loop.
+    [SerializeField] private float raycastHeight = 50f; 
+    [SerializeField] private int maxAttempts = 1000; 
 
     void Start() {
         if (groundObject == null) {
@@ -41,7 +40,7 @@ public class MazeBuilder : MonoBehaviour
         GenerateMap();
         surface.BuildNavMesh();
 
-        // After the NavMesh is generated/baked, place the player
+       
         PlacePlayer();
 
         SpawnWayPoints(numberWaypoints);

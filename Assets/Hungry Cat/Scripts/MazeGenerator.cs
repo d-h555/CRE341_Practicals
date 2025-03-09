@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.AI.Navigation;
+using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class MazeGenerator : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject npcPrefab, waypointsPrefab;
+    public GameObject groundObject;
+
     [SerializeField]
     private MazeCell _mazeCellPrefab;
 
@@ -21,6 +27,20 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private bool _useSeed;
     private MazeCell[,] _mazeGrid;
+
+    [SerializeField]
+    private int maxAttempts = 1000;
+
+    
+	[SerializeField] 
+    int numberOfNPCs = 5;
+	[SerializeField] 
+    List<GameObject> npcs = new List<GameObject>();
+	[SerializeField] 
+    int numberWaypoints = 4;
+	[SerializeField] 
+    List<GameObject> waypoints = new List<GameObject>();
+
 
     void Start()
     {
@@ -49,6 +69,37 @@ public class MazeGenerator : MonoBehaviour
 
         GenerateMaze(null, _mazeGrid[0, 0]);
         GetComponent<NavMeshSurface>().BuildNavMesh();
+
+        if (groundObject == null)
+        {
+            Debug.LogError("No object tagged 'Ground' found. Make sure your ground plane is tagged correctly.");
+            return;
+        }
+
+        PlacePlayer();
+
+        SpawnWayPoints(numberWaypoints);
+        SpawnNPCs(numberOfNPCs);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            GenerateMaze(null, _mazeGrid[0, 0]);
+            GetComponent<NavMeshSurface>().BuildNavMesh();
+            PlacePlayer();
+
+            // delete existing NPCs and spawn new ones
+            GameObject[] go_npcs = GameObject.FindGameObjectsWithTag("NPC");
+            foreach (GameObject npc in go_npcs) Destroy(npc);
+
+            GameObject[] go_wps = GameObject.FindGameObjectsWithTag("Waypoint");
+            foreach (GameObject wp in go_wps) Destroy(wp);
+
+            SpawnWayPoints(numberWaypoints);
+            SpawnNPCs(numberOfNPCs);
+        }
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -157,4 +208,97 @@ public class MazeGenerator : MonoBehaviour
             return;
         }
     }
-}
+
+    private void PlacePlayer()
+    {
+        Vector3 randomPlayerPos = GetRandomGroundPoint();
+        player.transform.position = randomPlayerPos;
+    }
+
+    public Vector3 GetRandomGroundPoint()
+    {
+       Bounds groundBounds = groundObject.GetComponent<Renderer>().bounds;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            float randX = Random.Range(groundBounds.min.x, groundBounds.max.x);
+            float randZ = Random.Range(groundBounds.min.z, groundBounds.max.z);
+
+            Vector3 randomPoint = new Vector3(randX, 0, randZ);
+
+            if (Physics.Raycast(randomPoint, Vector3.up, out RaycastHit hit, 1))
+            {
+                if (hit.collider.gameObject.CompareTag("Ground"))
+                {
+                    return hit.point;
+                }
+            }
+        }
+
+        Debug.LogWarning("No valid 'Ground' point found.");
+        return Vector3.zero;
+    }
+
+    private void SpawnNPCs(int count)
+    {
+        int maxAttempts = 1000;
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 randomNPCPos = Vector3.zero;
+            bool validPositionFound = false;
+            int attempts = 0;
+
+            while (!validPositionFound && attempts < maxAttempts)
+            {
+                randomNPCPos = GetRandomGroundPoint();
+                if (randomNPCPos != Vector3.zero)
+                {
+                    NavMeshHit hit;
+                    if (NavMesh.SamplePosition(randomNPCPos, out hit, 1.0f, NavMesh.AllAreas))
+                    {
+                        randomNPCPos = hit.position;
+                        validPositionFound = true;
+                    }
+                }
+                attempts++;
+            }
+
+            if (validPositionFound)
+            {
+                GameObject npc = Instantiate(npcPrefab, randomNPCPos, Quaternion.identity);
+                npc.tag = "NPC";
+            }
+        }
+    }
+
+        private void SpawnWayPoints(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 randomWaypointPos = Vector3.zero;
+                bool validPositionFound = false;
+                int attempts = 0;
+
+                while (!validPositionFound && attempts < maxAttempts)
+                {
+                    randomWaypointPos = GetRandomGroundPoint();
+                    if (randomWaypointPos != Vector3.zero)
+                    {
+                        NavMeshHit hit;
+                        if (NavMesh.SamplePosition(randomWaypointPos, out hit, 1.0f, NavMesh.AllAreas))
+                        {
+                            randomWaypointPos = hit.position;
+                            validPositionFound = true;
+                        }
+                    }
+                    attempts++;
+                }
+
+                if (validPositionFound)
+                {
+                    GameObject waypoint = Instantiate(waypointsPrefab, randomWaypointPos, Quaternion.identity);
+                    waypoint.tag = "Waypoint";
+                }
+            }
+        }
+    }
