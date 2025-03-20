@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Mice : MonoBehaviour
 {
+    public static Mice Instance { get; private set; }
     public float maxSpeed;
     public float maxSight;
     public GameObject player;

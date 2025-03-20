@@ -170,6 +170,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   IgnoreTag: Player
-  CameraRadius: 0.15
+  CameraRadius: 0.095
   DampingIntoCollision: 0
   DampingFromCollision: 0
