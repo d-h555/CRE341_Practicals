@@ -17,27 +17,22 @@ private float timeToChangeDirection = 0;
 
 private Vector3 randomDirection;
 
-private Transform playerPosition;
+private GameObject playerPosition;
 
     // Update is called once per frame
     void Update()
     {
+
         if (playerPosition == null)
         {
-            playerPosition = player.transform;
+            playerPosition = GameObject.FindWithTag("Player");
         }
-        else
-        {
-            if (Vector3.Distance(transform.position, player.transform.position ) < Vector3.Distance(transform.position, playerPosition.position))
-            {
-                playerPosition = player.transform;
-            }
-        }
+    
 
         if (playerPosition != null)
         {
-            Vector3 direction = transform.position - playerPosition.position;
-            Vector3 distance = transform.position - playerPosition.position;
+            Vector3 direction = transform.position - playerPosition.transform.position;
+            Vector3 distance = transform.position - playerPosition.transform.position;
 
             if (distance.magnitude < maxSight)
             {

@@ -226,7 +226,7 @@ public class MazeGenerator : MonoBehaviour
 
             Vector3 randomPoint = new Vector3(randX, 0, randZ);
 
-            if (Physics.Raycast(randomPoint, Vector3.up, out RaycastHit hit, 1))
+            if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, 1))
             {
                 if (hit.collider.gameObject.CompareTag("Ground"))
                 {
@@ -267,6 +267,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 GameObject npc = Instantiate(npcPrefab, randomNPCPos, Quaternion.identity);
                 npc.tag = "NPC";
+                Debug.Log("Generated NPCs");
             }
         }
     }
@@ -298,6 +299,7 @@ public class MazeGenerator : MonoBehaviour
                 {
                     GameObject waypoint = Instantiate(waypointsPrefab, randomWaypointPos, Quaternion.identity);
                     waypoint.tag = "Waypoint";
+                    Debug.Log ("Generated waypoints");
                 }
             }
         }
