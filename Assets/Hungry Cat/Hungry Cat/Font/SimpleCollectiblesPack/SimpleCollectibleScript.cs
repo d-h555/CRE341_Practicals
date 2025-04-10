@@ -36,7 +36,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 		
 		if (playerInventory != null)
 		{
-			playerInventory.StarsCollected();
+			playerInventory.CheeseCollected();
 			gameObject.SetActive(false);
 		}
 	}

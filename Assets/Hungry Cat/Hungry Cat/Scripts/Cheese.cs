@@ -8,7 +8,7 @@ public class Star : MonoBehaviour
 
     if(playerInventory != null)
     {
-        playerInventory.StarsCollected();
+        playerInventory.CheeseCollected();
         gameObject.SetActive(false);
     }
   }

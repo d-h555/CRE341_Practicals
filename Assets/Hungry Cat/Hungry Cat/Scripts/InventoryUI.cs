@@ -12,15 +12,15 @@ public class InventoryUI : MonoBehaviour
 
         if (playerInventory != null)
         {
-            playerInventory.OnStarsCollected.AddListener(UpdateStarText);
+            playerInventory.OnCheeseCollected.AddListener(UpdateStarText);
         }
     }
 
-    public void UpdateStarText(int newStarCount)
+    public void UpdateStarText(int newCheeseCount)
     {
         if (playerInventory != null)
         {
-            starText.text = newStarCount.ToString();
+            starText.text = newCheeseCount.ToString();
         }
     }
 }

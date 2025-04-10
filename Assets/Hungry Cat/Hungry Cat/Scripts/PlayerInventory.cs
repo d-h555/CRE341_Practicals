@@ -4,21 +4,21 @@ using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int NumberOfStars {get ; private set; }
+    public int NumberOfCheese {get ; private set; }
 
-    public UnityEvent<int> OnStarsCollected;
+    public UnityEvent<int> OnCheeseCollected;
     
     private void Start()
     {
-        if (OnStarsCollected == null)
+        if (OnCheeseCollected == null)
         {
-            OnStarsCollected = new UnityEvent<int>();
+            OnCheeseCollected = new UnityEvent<int>();
         }
     }
 
-    public void StarsCollected()
+    public void CheeseCollected()
     {
-        NumberOfStars++;
-        OnStarsCollected?.Invoke(NumberOfStars);
+        NumberOfCheese++;
+        OnCheeseCollected?.Invoke(NumberOfCheese);
     }
 }

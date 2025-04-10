@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using System.Runtime.CompilerServices;
 
 public class MazeGenerator : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class MazeGenerator : MonoBehaviour
     int numberWaypoints = 4;
 	[SerializeField] 
     List<GameObject> waypoints = new List<GameObject>();
+
+    // int numberOfCheese = 10;
+    // [SerializeField]
+    // List<GameObject> Cheese = new List<GameObject>();
 
 
     void Start()
@@ -80,6 +85,7 @@ public class MazeGenerator : MonoBehaviour
 
         SpawnWayPoints(numberWaypoints);
         SpawnNPCs(numberOfNPCs);
+        // SpawnCheese(numberOfCheese);
     }
 
     void Update()
@@ -221,8 +227,8 @@ public class MazeGenerator : MonoBehaviour
 
         for (int i = 0; i < maxAttempts; i++)
         {
-            float randX = Random.Range(groundBounds.min.x, groundBounds.max.x);
-            float randZ = Random.Range(groundBounds.min.z, groundBounds.max.z);
+            float randX = Random.Range(0, _mazeWidth);
+            float randZ = Random.Range(0, _mazeDepth);
 
             Vector3 randomPoint = new Vector3(randX, 0, randZ);
 
@@ -239,68 +245,74 @@ public class MazeGenerator : MonoBehaviour
         return Vector3.zero;
     }
 
-    private void SpawnNPCs(int count)
+  private void SpawnNPCs(int count)
+{
+    for (int i = 0; i < count; i++)
     {
-        int maxAttempts = 1000;
-        for (int i = 0; i < count; i++)
+        Vector3 randomNPCPos = Vector3.zero;
+        bool validPositionFound = false;
+
+        while (!validPositionFound)
         {
-            Vector3 randomNPCPos = Vector3.zero;
-            bool validPositionFound = false;
-            int attempts = 0;
+            // Get a random cell within the maze boundaries
+            int randomX = Random.Range(0, _mazeWidth);
+            int randomZ = Random.Range(0, _mazeDepth);
 
-            while (!validPositionFound && attempts < maxAttempts)
-            {
-                randomNPCPos = GetRandomGroundPoint();
-                if (randomNPCPos != Vector3.zero)
-                {
-                    NavMeshHit hit;
-                    if (NavMesh.SamplePosition(randomNPCPos, out hit, 1.0f, NavMesh.AllAreas))
-                    {
-                        randomNPCPos = hit.position;
-                        validPositionFound = true;
-                    }
-                }
-                attempts++;
-            }
+            MazeCell randomCell = _mazeGrid[randomX, randomZ];
+            randomNPCPos = randomCell.transform.position;
 
-            if (validPositionFound)
+            // Ensure the position is valid on the NavMesh
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomNPCPos, out hit, 1.0f, NavMesh.AllAreas))
             {
-                GameObject npc = Instantiate(npcPrefab, randomNPCPos, Quaternion.identity);
-                npc.tag = "NPC";
-                Debug.Log("Generated NPCs");
+                randomNPCPos = hit.position;
+                validPositionFound = true;
             }
         }
+
+        GameObject npc = Instantiate(npcPrefab, randomNPCPos, Quaternion.identity);
+        npc.tag = "NPC";
+        Debug.Log("Generated NPCs");
     }
+}
+       private void SpawnWayPoints(int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        Vector3 randomWaypointPos = Vector3.zero;
+        bool validPositionFound = false;
 
-        private void SpawnWayPoints(int count)
+        while (!validPositionFound)
         {
-            for (int i = 0; i < count; i++)
+            // Get a random cell within the maze boundaries
+            int randomX = Random.Range(0, _mazeWidth);
+            int randomZ = Random.Range(0, _mazeDepth);
+
+            MazeCell randomCell = _mazeGrid[randomX, randomZ];
+            randomWaypointPos = randomCell.transform.position;
+
+            // Ensure the position is valid on the NavMesh
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomWaypointPos, out hit, 1.0f, NavMesh.AllAreas))
             {
-                Vector3 randomWaypointPos = Vector3.zero;
-                bool validPositionFound = false;
-                int attempts = 0;
-
-                while (!validPositionFound && attempts < maxAttempts)
-                {
-                    randomWaypointPos = GetRandomGroundPoint();
-                    if (randomWaypointPos != Vector3.zero)
-                    {
-                        NavMeshHit hit;
-                        if (NavMesh.SamplePosition(randomWaypointPos, out hit, 1.0f, NavMesh.AllAreas))
-                        {
-                            randomWaypointPos = hit.position;
-                            validPositionFound = true;
-                        }
-                    }
-                    attempts++;
-                }
-
-                if (validPositionFound)
-                {
-                    GameObject waypoint = Instantiate(waypointsPrefab, randomWaypointPos, Quaternion.identity);
-                    waypoint.tag = "Waypoint";
-                    Debug.Log ("Generated waypoints");
-                }
+                randomWaypointPos = hit.position;
+                validPositionFound = true;
             }
         }
+
+        GameObject waypoint = Instantiate(waypointsPrefab, randomWaypointPos, Quaternion.identity);
+        waypoint.tag = "Waypoint";
+        Debug.Log("Generated waypoints");
+         }
     }
+}
+
+    
+
+    //         private void SpawnCheese (int count )    
+            
+
+
+    //         }
+    //     }
+    // }
