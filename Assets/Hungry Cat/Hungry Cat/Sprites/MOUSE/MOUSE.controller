@@ -11,7 +11,11 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
+<<<<<<< HEAD
   - {fileID: 743730072519963553}
+=======
+  - {fileID: 625649775497596998}
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -27,6 +31,62 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
+=======
+--- !u!206 &-4933821579691665358
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Movement
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 5975755282574052555, guid: 2796ed9f3aac25d49969d5b4efc6b392, type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Blend
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 2636487559795897527, guid: 1641b46de99810043b42cfcf47c5722d, type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Blend
+    m_Mirror: 0
+  m_BlendParameter: Blend
+  m_BlendParameterY: Blend
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
+--- !u!1101 &-3878031877454035029
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8252259443406321745}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.54545456
+  m_HasExitTime: 1
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -36,7 +96,11 @@ AnimatorController:
   m_Name: MOUSE
   serializedVersion: 5
   m_AnimatorParameters:
+<<<<<<< HEAD
   - m_Name: isRunning
+=======
+  - m_Name: isWalking
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -69,7 +133,11 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8252259443406321745}
+<<<<<<< HEAD
     m_Position: {x: 30, y: -90, z: 0}
+=======
+    m_Position: {x: 30, y: -70, z: 0}
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -80,17 +148,25 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1068691273658527037}
+<<<<<<< HEAD
 --- !u!1101 &743730072519963553
+=======
+--- !u!1101 &625649775497596998
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+<<<<<<< HEAD
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isRunning
     m_EventTreshold: 0
+=======
+  m_Conditions: []
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1068691273658527037}
   m_Solo: 0
@@ -100,7 +176,11 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.5833334
+<<<<<<< HEAD
   m_HasExitTime: 0
+=======
+  m_HasExitTime: 1
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -116,7 +196,11 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
+<<<<<<< HEAD
   - {fileID: 6960165362992713268}
+=======
+  - {fileID: -3878031877454035029}
+>>>>>>> 8478aa9a8001f1f0279beb9fa0f37eb0b3cb7366
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
