@@ -10,7 +10,8 @@ public class MazeBuilder : MonoBehaviour
 {
 
     public GameObject player; 
-    public GameObject npcPrefab, waypointsPrefab;     public GameObject groundObject;
+    public GameObject npcPrefab, waypointsPrefab, potionsPrefab;
+    public GameObject groundObject;
     public int width;
     public int height;
 
@@ -24,6 +25,7 @@ public class MazeBuilder : MonoBehaviour
     [SerializeField] List<GameObject> npcs = new List<GameObject>();
     [SerializeField] int numberWaypoints = 4;
     [SerializeField] List<GameObject> waypoints = new List<GameObject>();
+    [SerializeField] List<GameObject> potions = new List<GameObject>();
 
     int[,] map;
 
@@ -45,6 +47,7 @@ public class MazeBuilder : MonoBehaviour
 
         SpawnWayPoints(numberWaypoints);
         SpawnNPCs(numberOfNPCs);
+        SpawnPotions(5); // Spawn 5 potions
     }
 
     void Update() {
@@ -65,27 +68,31 @@ public class MazeBuilder : MonoBehaviour
         }
     }
 
-    void GenerateMap() {
-        map = new int[width, height];
-        InitialiseMaze();
-        CarveMaze(1, 1);
+  void GenerateMap() {
+    map = new int[width, height];
+    InitialiseMaze();
+    CarveMaze(1, 1);
 
-        int borderSize = 1;
-        int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
+    int borderSize = 1;
+    int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
 
-        for (int x = 0; x < borderedMap.GetLength(0); x++) {
-            for (int y = 0; y < borderedMap.GetLength(1); y++) {
-                if (x >= borderSize && x < width + borderSize && y >= borderSize && y < height + borderSize) {
-                    borderedMap[x, y] = map[x - borderSize, y - borderSize];
-                } else {
-                    borderedMap[x, y] = 1;
-                }
+    for (int x = 0; x < borderedMap.GetLength(0); x++) {
+        for (int y = 0; y < borderedMap.GetLength(1); y++) {
+            if (x >= borderSize && x < width + borderSize && y >= borderSize && y < height + borderSize) {
+                borderedMap[x, y] = map[x - borderSize, y - borderSize];
+            } else {
+                borderedMap[x, y] = 1;
             }
         }
-
-        MeshGenerator meshGen = GetComponent<MeshGenerator>();
-        meshGen.GenerateMesh(borderedMap, 1);
     }
+
+    MeshGenerator meshGen = GetComponent<MeshGenerator>();
+    if (meshGen == null) {
+        Debug.LogError("MeshGenerator component is missing on this GameObject.");
+        return;
+    }
+    meshGen.GenerateMesh(borderedMap, 1);
+}
 
     void InitialiseMaze() {
         for (int x = 0; x < width; x++) {
@@ -213,4 +220,31 @@ public class MazeBuilder : MonoBehaviour
             }
         }
     }
-}
+
+    void SpawnPotions(int count) {
+        for (int i = 0; i < count; i++) {
+            Vector3 randomPotionPos = Vector3.zero;
+            bool validPositionFound = false;
+            int attempts = 0;
+
+            while (!validPositionFound && attempts < maxAttempts) {
+                randomPotionPos = GetRandomGroundPoint();
+                if (randomPotionPos != Vector3.zero) {
+                    NavMeshHit hit;
+                    if (NavMesh.SamplePosition(randomPotionPos, out hit, 1.0f, NavMesh.AllAreas)) {
+                        randomPotionPos = hit.position;
+                        validPositionFound = true;
+                    }
+                }
+                attempts++;
+            }
+
+                if (validPositionFound) {
+                    Instantiate(potionsPrefab, randomPotionPos, Quaternion.identity);
+                    potions.Add(potionsPrefab);
+                } else {
+                    Debug.LogWarning("Failed to find a valid NavMesh point for Potion.");
+                }
+             }
+         }
+    }

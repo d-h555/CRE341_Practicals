@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 public class MazeGenerator : MonoBehaviour
 {
     public GameObject player;
-    public GameObject npcPrefab, waypointsPrefab;
+    public GameObject npcPrefab, waypointsPrefab, potionPrefab;
     public GameObject groundObject;
 
     [SerializeField]
@@ -41,6 +41,11 @@ public class MazeGenerator : MonoBehaviour
     int numberWaypoints = 4;
 	[SerializeField] 
     List<GameObject> waypoints = new List<GameObject>();
+    
+    [SerializeField]  
+     int numberPotions = 4;
+	[SerializeField] 
+    List<GameObject> potions = new List<GameObject>();
 
     // int numberOfCheese = 10;
     // [SerializeField]
@@ -85,6 +90,8 @@ public class MazeGenerator : MonoBehaviour
 
         SpawnWayPoints(numberWaypoints);
         SpawnNPCs(numberOfNPCs);
+        SpawnPotions(numberPotions);
+        Debug.Log($"Number of potions to spawn: {numberPotions}");
         // SpawnCheese(numberOfCheese);
     }
 
@@ -304,15 +311,36 @@ public class MazeGenerator : MonoBehaviour
         waypoint.tag = "Waypoint";
         Debug.Log("Generated waypoints");
          }
-    }
 }
 
-    
+    private void SpawnPotions(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 randomPotionPos = Vector3.zero;
+            bool validPositionFound = false;
 
-    //         private void SpawnCheese (int count )    
-            
+            while (!validPositionFound)
+            {
+                // Get a random cell within the maze boundaries
+                int randomX = Random.Range(0, _mazeWidth);
+                int randomZ = Random.Range(0, _mazeDepth);
 
+                MazeCell randomCell = _mazeGrid[randomX, randomZ];
+                randomPotionPos = randomCell.transform.position;
 
-    //         }
-    //     }
-    // }
+                // Ensure the position is valid on the NavMesh
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomPotionPos, out hit, 1.0f, NavMesh.AllAreas))
+                {
+                    randomPotionPos = hit.position;
+                    validPositionFound = true;
+                }
+            }
+
+            GameObject potion = Instantiate(potionPrefab, randomPotionPos, Quaternion.identity);
+            potion.tag = "Potion";
+            Debug.Log("Generated potions");
+        }
+    }
+}

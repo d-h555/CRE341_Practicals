@@ -1,13 +1,15 @@
-using System.Data.Common;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-public class Mice : MonoBehaviour
+public class FleeState : State
 {
     public static Mice Instance { get; private set; }
     public float maxSpeed;
     public float maxSight;
     public GameObject player;
     NavMeshAgent agent;
+    
+    public Animator animator;
 
     public float wanderSpeed;
     public float wanderTime;
@@ -18,10 +20,19 @@ public class Mice : MonoBehaviour
 
     private GameObject playerPosition;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        animator = GetComponent<Animator>();
+    }
 
+    private void OnEnable()
+    {
+        animator.SetBool("isRunning", true);
+    }
+
+    // Update is called once per frame
+       public override State RunCurrentState()
+    {
         if (playerPosition == null)
         {
             playerPosition = GameObject.FindWithTag("Player");
@@ -52,6 +63,6 @@ public class Mice : MonoBehaviour
                 }
             }
         }
+        return this; // Ensure a return statement is present in all code paths
     }
 }
-
