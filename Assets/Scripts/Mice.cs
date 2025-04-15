@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Mouse : MonoBehaviour
+public class Mice : MonoBehaviour
 {
     public float maxSpeed;
     public float maxSight;

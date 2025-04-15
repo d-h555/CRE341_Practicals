@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2ebed70db7d8e4b9c025edebc90add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackState: {fileID: 0}
+  attackState: {fileID: 6148433589141901487}
   isInAttackRange: 0
 --- !u!1 &2936842981969552144
 GameObject:
@@ -90,7 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8594f1a4da23cf49a64b739df71cd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseState: {fileID: 0}
+  chaseState: {fileID: 6879041875830801890}
+  fleeState: {fileID: 8169912731752007965}
   canSeePlayer: 0
 --- !u!1 &5752235937300854555
 GameObject:
@@ -205,7 +206,7 @@ GameObject:
   - component: {fileID: 8917185845300585456}
   - component: {fileID: 2314827326681577263}
   - component: {fileID: 8060571364854655846}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MOUSE
   m_TagString: NPC
   m_Icon: {fileID: 0}
