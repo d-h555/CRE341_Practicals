@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+namespace Mouse { 
+    public class CharacterStats : MonoBehaviour
     {
-        
+    
+
+    protected int currentHealth;
+    protected int maxHealth;
+    protected int healthLevel;
+
+    // Other shared functionality for character stats
+
+
+        public int staminaLevel = 10;
+        public int maxStamina;
+        public int currentStamina;
     }
 }

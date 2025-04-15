@@ -6,8 +6,18 @@ public class Potion : MonoBehaviour
     public Transform player; // Reference to the player object
     public float effectDuration = 15f; // Duration of the potion effect
     private float startTime; // Time when the potion effect started
-     private void OnTriggerEnter(Collider other)
 
+        private void OnTriggerEnter(Collider other)
+    {
+        // Check if the object entering the trigger is the player
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player picked up the potion!");
+            player = other.transform; // Assign the player reference
+            HasBeenConsumed(); // Apply the potion effect
+        }
+    }
+     public void HasBeenConsumed()
     {
         if (!isDrank)
         {
