@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 1756674431}
   - component: {fileID: 1756674432}
   - component: {fileID: 1756674433}
+  - component: {fileID: 1756674434}
   m_Layer: 0
   m_Name: MazeGenerator
   m_TagString: Untagged
@@ -1165,6 +1166,21 @@ MonoBehaviour:
   surface: {fileID: 1756674432}
   raycastHeight: 50
   maxAttempts: 1000
+--- !u!114 &1756674434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756674429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd1c2e4166d04a9a83ca4082dd96614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walls: {fileID: 0}
+  cave: {fileID: 0}
+  is2D: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

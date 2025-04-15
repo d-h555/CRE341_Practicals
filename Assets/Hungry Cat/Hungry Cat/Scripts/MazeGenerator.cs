@@ -92,6 +92,7 @@ public class MazeGenerator : MonoBehaviour
         SpawnNPCs(numberOfNPCs);
         SpawnPotions(numberPotions);
         Debug.Log($"Number of potions to spawn: {numberPotions}");
+        SpawnPotions(numberPotions);
         // SpawnCheese(numberOfCheese);
     }
 
