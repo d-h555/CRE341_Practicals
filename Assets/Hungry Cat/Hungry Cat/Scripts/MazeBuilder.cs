@@ -10,7 +10,7 @@ public class MazeBuilder : MonoBehaviour
 {
 
     public GameObject player; 
-    public GameObject npcPrefab, waypointsPrefab, potionsPrefab;
+    public GameObject npcPrefab, waypointsPrefab, potionsPrefab, cheesePrefab;
     public GameObject groundObject;
     public int width;
     public int height;
@@ -27,6 +27,7 @@ public class MazeBuilder : MonoBehaviour
     [SerializeField] List<GameObject> waypoints = new List<GameObject>();
     [SerializeField] List<GameObject> potions = new List<GameObject>();
 
+    [SerializeField] List<GameObject> cheese = new List<GameObject>(); // List to store spawned cheese
     int[,] map;
 
     [SerializeField] public NavMeshSurface surface;
@@ -48,6 +49,7 @@ public class MazeBuilder : MonoBehaviour
         SpawnWayPoints(numberWaypoints);
         SpawnNPCs(numberOfNPCs);
         SpawnPotions(5); // Spawn 5 potions
+        SpawnCheese(5);
     }
 
     void Update() {
@@ -247,4 +249,31 @@ public class MazeBuilder : MonoBehaviour
                 }
              }
          }
+        
+    void SpawnCheese(int count) {
+        for (int i = 0; i < count; i++) {
+            Vector3 randomCheesePos = Vector3.zero;
+            bool validPositionFound = false;
+            int attempts = 0;
+
+            while (!validPositionFound && attempts < maxAttempts) {
+                randomCheesePos = GetRandomGroundPoint();
+                if (randomCheesePos != Vector3.zero) {
+                    NavMeshHit hit;
+                    if (NavMesh.SamplePosition(randomCheesePos, out hit, 1.0f, NavMesh.AllAreas)) {
+                        randomCheesePos = hit.position;
+                        validPositionFound = true;
+                    }
+                }
+                attempts++;
+            }
+
+            if (validPositionFound) {
+                Instantiate(cheesePrefab, randomCheesePos, Quaternion.identity);
+                cheese.Add(cheesePrefab);
+            } else {
+                Debug.LogWarning("Failed to find a valid NavMesh point for Cheese.");
+            }
+        }
     }
+}

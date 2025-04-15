@@ -1,149 +1,83 @@
+using System.Diagnostics;
 using Mouse;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Mouse 
 {
     public class MouseManager : MonoBehaviour
     {
+        public State currentState;
+      
         // Ensure the EnemyLocomotionManager class is defined or imported
         EnemyLocomotionManager enemyLocomotionManager;
         AnimatorManager enemyAnimatorHandler;
-        public MouseAttackAction currentAttack;
-        public MouseAttackAction[] attackActions;
+        public NavMeshAgent navMeshAgent;
+        public Rigidbody rb;
+        EnemyStats enemyStats;
+    
         Potion potion;
         [Header("A.I Settings")]
         //the higher, and lower, respectively these angles are, the greator the detection filed of view
         public float maximumDetectionAngle = 50;
         public float minimumDetectionAngle = -50;
+
+          [Header("Detection Settings")]
+        public float detectionRadius = 20f; // Radius for detecting targets
+        
+        [Header("Attack Settings")]
+        public float maxAttackRange = 1.5f; // Maximum range for attacks
+        public float currentRecoveryTime = 0f; // Time remaining before the next attack
+        public float recoveryTime = 2f; // Total recovery time between attacks
+        public bool isPerformingAction; // Whether the mouse is currently performing an action
+        public float distanceFromTarget;
       
         public bool isPreformingAction;
-        public MouseAttackAction[] enemyAttacks;
-
-        public float detectionRadius = 20f;
-        public float currentRecoveryTime = 0;
-
-
+        public CharacterStats currentTarget;
+        
         private void Awake()
         {
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
             enemyAnimatorHandler = GetComponent<MouseAnimatorHandler>();
+            enemyStats = GetComponent<EnemyStats>();
+            potion = GetComponent<Potion>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            rb = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            rb.isKinematic = true;
         }
         private void FixedUpdate ()
         {
-            HandleCurrentAction();
+            HandleStateMachine();
         }
 
-        private void HandleCurrentAction()
+        private void HandleStateMachine()
         {
-        if (enemyLocomotionManager.currentTarget != null)
+            if (currentState != null)
             {
-                enemyLocomotionManager.distanceFromTarget = Vector3.Distance(enemyLocomotionManager.currentTarget.transform.position, transform.position);
-            }
-
-            if (enemyLocomotionManager.currentTarget == null)
-            {
-                enemyLocomotionManager.HandleDetection();
-            }
-            else if (enemyLocomotionManager.distanceFromTarget > enemyLocomotionManager.stoppingDistance)
-            {
-                enemyLocomotionManager.HandleMoveToTarget();
-            }
-            else if (potion != null && potion.HasBeenConsumed() == true) // Check if the potion has been consumed
-            {
-                Debug.Log("Player has consumed the potion!");
-            enemyLocomotionManager.HandleFleeTarget();
-            }
-            else if (enemyLocomotionManager.distanceFromTarget <= enemyLocomotionManager.stoppingDistance)
-            {
-                AttackTarget();
+                State nextState = currentState.Tick(this, enemyStats, enemyAnimatorHandler);
+                
+                if (nextState != null)
+                {
+                    SwitchToNewState(nextState);
+                }
             }
         }
 
-    private void HandleInRecovery()
-    {
-        if (currentRecoveryTime > 0)
+        private void SwitchToNewState(State state)
         {
-            currentRecoveryTime -= Time.deltaTime;
-        }
-
-        if (isPreformingAction)
-        {
-            if(currentRecoveryTime <= 0)
+            if (currentState != null)
             {
-                isPreformingAction = false;
-                currentRecoveryTime = 0;
+                currentState.enabled = false;
             }
+            currentState = state;
+            currentState.enabled = true;
         }
     }
 
-        private void AttackTarget()
-        {
-            if(isPreformingAction)
-                return;
-            if (currentAttack != null && enemyLocomotionManager.currentTarget != null)
-            {
-                currentAttack = null;
-                GetNewAttack();
-            }
-            else
-            {
-                isPreformingAction = true;
-                currentRecoveryTime = currentAttack.recoveryTime;
-                enemyAnimatorHandler.PlayTargetAnimation(currentAttack.actionAnimation, true);
-                currentAttack = null;
-            }
-        }
-
-        #region Attacks
-        private void GetNewAttack()
-        {
-            Vector3 targetsDirection = enemyLocomotionManager.currentTarget.transform.position - transform.position;
-            float viewableAngle = Vector3.Angle(targetsDirection, transform.forward);
-            enemyLocomotionManager.distanceFromTarget = Vector3.Distance(enemyLocomotionManager.currentTarget.transform.position, transform.position);
-
-            int maxScore = 0;
-            
-            for (int i = 0; i < enemyAttacks.Length; i++)
-            {
-                MouseAttackAction mouseAttackAction = enemyAttacks[i];
-
-                if (enemyLocomotionManager.distanceFromTarget <= mouseAttackAction.maxDistanceNeededToAttack && enemyLocomotionManager.distanceFromTarget >= mouseAttackAction.minDistanceNeededToAttack)
-                {
-                   if (viewableAngle <= mouseAttackAction.maxAttackAngle && viewableAngle >= mouseAttackAction.minAttackAngle)
-                   {
-                    maxScore += mouseAttackAction.attackScore;
-                   }
-                }
-            }
-        
-        int randomValue = Random.Range(0, maxScore);
-        int temporaryScore = 0;
-        for (int i = 0; i < enemyAttacks.Length; i++)
-        {
-                    MouseAttackAction mouseAttackAction = enemyAttacks[i];
-
-                if (enemyLocomotionManager.distanceFromTarget <= mouseAttackAction.maxDistanceNeededToAttack && enemyLocomotionManager.distanceFromTarget >= mouseAttackAction.minDistanceNeededToAttack)
-                {
-                   if (viewableAngle <= mouseAttackAction.maxAttackAngle && viewableAngle >= mouseAttackAction.minAttackAngle)
-                   {
-                    if (currentAttack != null)
-                        return;
-
-                    temporaryScore += mouseAttackAction.attackScore;
-
-                        if(temporaryScore > randomValue)
-                        {
-                         currentAttack = mouseAttackAction;
-                        }
-                   }
-                }
-            }
-        }
-            #endregion
-
-    }                        
-
 }
-

@@ -17,7 +17,7 @@ public class Potion : MonoBehaviour
             HasBeenConsumed(); // Apply the potion effect
         }
     }
-     public void HasBeenConsumed()
+     public bool HasBeenConsumed()
     {
         if (!isDrank)
         {
@@ -29,7 +29,9 @@ public class Potion : MonoBehaviour
             Debug.Log("Potion effect applied!");
             Destroy(gameObject); // Destroy the potion after use
             
+            return true;
         }
+        return false; // Return false if the potion has already been consumed
     }
         
         private void Update()
