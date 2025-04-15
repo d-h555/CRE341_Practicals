@@ -6,23 +6,19 @@ using System.Collections.Generic;
 public class Waypoint : StateMachineBehaviour
 {
     GameObject MOUSE;
-    bool isWalking = false;
+    
 
     // list of gameObject waypoints
     List<GameObject> waypoints;
     [SerializeField] Transform WaypointTarget;
     
-void Start(Animator animator)
-    {
-       Animator animatorComponent = animator;
-    }
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // debug statement 
         Debug.Log("Entering Patrol State");
-        isWalking = true;
+    
 
         // get all waypoints with tag Waypoint
         waypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("Waypoint"));
@@ -53,7 +49,7 @@ void Start(Animator animator)
     {
         // debug statement 
         Debug.Log("Exiting Patrol State");
-        isWalking = false;
+     
     }
 
 }

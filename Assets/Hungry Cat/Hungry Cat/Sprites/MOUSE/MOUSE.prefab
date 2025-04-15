@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 442734494179875215}
-  - component: {fileID: 4561727221920117566}
+  - component: {fileID: 6879041875830801890}
   m_Layer: 0
   m_Name: chase
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 61546401230401958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4561727221920117566
+--- !u!114 &6879041875830801890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2343429032955482482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2ee5cc482fcd1f4e8ccc6bd06fc4266, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e2ebed70db7d8e4b9c025edebc90add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackState: {fileID: 4804696427061200726}
-  isPlayerInRange: 0
-  animator: {fileID: 8060571364854655846}
+  attackState: {fileID: 0}
+  isInAttackRange: 0
 --- !u!1 &2936842981969552144
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2856542664864503951}
-  - component: {fileID: 7844137391068200618}
+  - component: {fileID: 5133542297408317834}
   m_Layer: 0
   m_Name: idle
   m_TagString: Untagged
@@ -79,7 +78,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 61546401230401958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7844137391068200618
+--- !u!114 &5133542297408317834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,13 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2936842981969552144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1678d689fb5314d81f5d8ec015a7ea, type: 3}
+  m_Script: {fileID: 11500000, guid: c8594f1a4da23cf49a64b739df71cd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseState: {fileID: 4561727221920117566}
-  fleeState: {fileID: 8169912731752007965}
-  canSeeThePlayer: 0
-  animator: {fileID: 8060571364854655846}
+  chaseState: {fileID: 0}
+  canSeePlayer: 0
 --- !u!1 &5752235937300854555
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,12 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1fcad383e25724d81048839c25f00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 0
-  maxSight: 0
+  maxSpeed: 10
+  maxSight: 7
   player: {fileID: 100006, guid: 756b0c574f380324a85262e736c0418b, type: 3}
   animator: {fileID: 8060571364854655846}
-  wanderSpeed: 0
-  wanderTime: 0
+  wanderSpeed: 7
+  wanderTime: 7
   fleeDistanceCurve:
     serializedVersion: 2
     m_Curve: []
@@ -160,7 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4032341985649573752}
-  - component: {fileID: 4804696427061200726}
+  - component: {fileID: 6148433589141901487}
   m_Layer: 0
   m_Name: attack
   m_TagString: Untagged
@@ -183,7 +180,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 61546401230401958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4804696427061200726
+--- !u!114 &6148433589141901487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,10 +189,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6478005685913809849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cade8927850a964eb0ea73504e32def, type: 3}
+  m_Script: {fileID: 11500000, guid: 7feb0fd4eb769944396f78e3eb887b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8060571364854655846}
 --- !u!1 &7602852509624468013
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 61546401230401958}
-  - component: {fileID: 8774442739888616932}
+  - component: {fileID: 3409101713467229489}
   m_Layer: 0
   m_Name: States
   m_TagString: Untagged
@@ -388,7 +384,7 @@ Transform:
   - {fileID: 6968888415754522809}
   m_Father: {fileID: 4147597283483690948}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8774442739888616932
+--- !u!114 &3409101713467229489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,6 +393,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7932101093542202821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba4c956e265c24d4cbb13f5e535a14ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b077fcc14c4f3e40be3dce11eefb237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
