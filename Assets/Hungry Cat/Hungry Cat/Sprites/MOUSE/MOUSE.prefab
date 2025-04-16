@@ -189,7 +189,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.076162696, y: 0.00000011920929, z: -0.4969648}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3640860349646685603}
@@ -398,8 +398,6 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
-  damageColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.2
 --- !u!114 &4068340665514693863
 MonoBehaviour:
   m_ObjectHideFlags: 0
