@@ -34,7 +34,14 @@ public class FleeState : State
     // This method is called when the state is running
     public override State RunCurrentState()
     {
-        // If the player's position is not cached, find the player GameObject by tag
+        // This method is not used in this state, but it must be implemented as part of the State class
+        return this; // Return the current state
+    }
+
+    // This method is called every frame to handle the logic for this state
+    public override State Tick(MouseManager mouseManager, EnemyStats enemyStats, AnimatorManager animatorHandler)
+    {
+           // If the player's position is not cached, find the player GameObject by tag
         if (playerPosition == null)
         {
             playerPosition = GameObject.FindWithTag("Player");
@@ -81,9 +88,4 @@ public class FleeState : State
         return this;
     }
 
-    // This method is called every frame to handle the logic for this state
-    public override State Tick(MouseManager mouseManager, EnemyStats enemyStats, AnimatorManager animatorHandler)
-    {
-        throw new System.NotImplementedException(); // Placeholder for functionality if needed
     }
-}

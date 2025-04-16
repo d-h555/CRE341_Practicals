@@ -17,6 +17,7 @@ namespace Mouse
 
         void Start ()
         {
+            healthLevel = 5; // Set the health level to 3
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
         }
@@ -33,11 +34,18 @@ namespace Mouse
         {
             currentHealth = currentHealth - damage;
 
-            animatorManager.PlayTargetAnimation("Damage.01", true);
+                  // Play the hurt sound
+            //if (audioSource != null && hurtSound != null)
+            //{
+                //audioSource.PlayOneShot(hurtSound);
+            //}
+
+            // Optional: Add logic for when the player dies
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
-                animatorManager.PlayTargetAnimation("Death", true);
+                Debug.Log("Player is dead!");
+                // Add death logic here
             }
         }
     }

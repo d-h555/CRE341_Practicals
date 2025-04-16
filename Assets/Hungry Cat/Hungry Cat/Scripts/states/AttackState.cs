@@ -35,16 +35,13 @@ public class AttackState : State
     // Simple attack function
     private void PerformAttack(MouseManager mouseManager, AnimatorManager mouseAnimatorHandler)
     {
-        if (mouseManager.isPreformingAction) return; // Prevent multiple attacks if already performing an action
-
-        // Play the attack animation
-        mouseAnimatorHandler.anim.SetTrigger("isAttacking"); // Trigger the attack animation
+        if (mouseManager.isPerformingAction) return; // Prevent multiple attacks if already performing an action
 
         // Set the recovery time for the next attack
         mouseManager.currentRecoveryTime = mouseManager.recoveryTime;
 
         // Set the performing action flag to true
-        mouseManager.isPreformingAction = true;
+        mouseManager.isPerformingAction = true;
 
           // Cause damage to the player
          if (mouseManager.currentTarget != null)

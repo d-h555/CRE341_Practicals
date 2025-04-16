@@ -10,11 +10,12 @@ TagManager:
   - NPC
   - Waypoint
   - Potion
+  - Cheese
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - Ground

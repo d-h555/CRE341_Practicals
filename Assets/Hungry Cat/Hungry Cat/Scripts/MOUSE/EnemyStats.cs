@@ -14,8 +14,9 @@ namespace Mouse {
             // Start is called once before the first execution of Update after the MonoBehaviour is created
             private void Awake()
             {
-            animator = GetComponent<Animator>();
-            currentHealth = maxHealth;
+                healthLevel = 3;
+                animator = GetComponent<Animator>();
+                currentHealth = maxHealth;
             }
         
         private int SetMaxHealthFromHealthLevel()

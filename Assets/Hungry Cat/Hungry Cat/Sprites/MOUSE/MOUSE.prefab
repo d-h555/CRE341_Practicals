@@ -50,6 +50,7 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 256
+  waypointPrefab: {fileID: 0}
   waypoints: []
   waypointReachedThreshold: 1
 --- !u!1 &6535211149157848552
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7feb0fd4eb769944396f78e3eb887b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseState: {fileID: 0}
+  chaseState: {fileID: 1315997806199318758}
 --- !u!1 &7886208152427929472
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +173,7 @@ GameObject:
   - component: {fileID: 1883045408050682308}
   - component: {fileID: 4068340665514693863}
   - component: {fileID: 6101683043479535502}
+  - component: {fileID: -9201667050277436960}
   m_Layer: 9
   m_Name: MOUSE
   m_TagString: NPC
@@ -398,6 +400,8 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!114 &4068340665514693863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,6 +441,19 @@ MonoBehaviour:
   distanceFromTarget: 0
   isPreformingAction: 0
   currentTarget: {fileID: 0}
+--- !u!114 &-9201667050277436960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002980710249202204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d48e672a9bbe44a99f29edcc3b4b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &8320840591263496679
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ public class Potion : MonoBehaviour
 {
     public bool isDrank; // Flag to check if the potion is consumed
     public Transform player; // Reference to the player object
-    public float effectDuration = 15f; // Duration of the potion effect
+    public float effectDuration = 10f; // Duration of the potion effect
     private float startTime; // Time when the potion effect started
 
         private void OnTriggerEnter(Collider other)

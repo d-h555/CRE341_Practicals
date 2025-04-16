@@ -120,6 +120,7 @@ namespace StarterAssets
 		private void LateUpdate()
 		{
 			CameraRotation();
+			AlignPlayerWithCamera();
 		}
 
 		private void GroundedCheck()
@@ -150,6 +151,19 @@ namespace StarterAssets
 				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
 		}
+
+		private void AlignPlayerWithCamera()
+{
+    // Get the forward direction of the camera
+    Vector3 cameraForward = _mainCamera.transform.forward;
+    cameraForward.y = 0; // Keep the player upright (ignore vertical rotation)
+
+    // Rotate the player to face the camera's forward direction
+    if (cameraForward != Vector3.zero)
+    {
+        transform.rotation = Quaternion.LookRotation(cameraForward);
+    }
+}
 
 		private void Move()
 		{

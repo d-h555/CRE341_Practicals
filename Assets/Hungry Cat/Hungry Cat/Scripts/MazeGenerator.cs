@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 public class MazeGenerator : MonoBehaviour
 {
     public GameObject player;
-    public GameObject npcPrefab, waypointsPrefab, potionPrefab;
+    public GameObject npcPrefab, waypointsPrefab, potionPrefab, cheesePrefab;
     public GameObject groundObject;
 
     [SerializeField]
@@ -46,11 +46,10 @@ public class MazeGenerator : MonoBehaviour
      int numberPotions = 4;
 	[SerializeField] 
     List<GameObject> potions = new List<GameObject>();
+    List<GameObject> Cheese = new List<GameObject>();
 
-    // int numberOfCheese = 10;
-    // [SerializeField]
-    // List<GameObject> Cheese = new List<GameObject>();
-
+    public int totalCheeseCount;
+    public int collectedCheeseCount;
 
     void Start()
     {
@@ -93,7 +92,7 @@ public class MazeGenerator : MonoBehaviour
         SpawnPotions(numberPotions);
         Debug.Log($"Number of potions to spawn: {numberPotions}");
         SpawnPotions(numberPotions);
-        // SpawnCheese(numberOfCheese);
+        SpawnCheese();
     }
 
     void Update()
@@ -283,7 +282,7 @@ public class MazeGenerator : MonoBehaviour
         Debug.Log("Generated NPCs");
     }
 }
-       private void SpawnWayPoints(int count)
+      public void SpawnWayPoints(int count)
 {
     for (int i = 0; i < count; i++)
     {
@@ -313,35 +312,77 @@ public class MazeGenerator : MonoBehaviour
         Debug.Log("Generated waypoints");
          }
 }
-
-    private void SpawnPotions(int count)
+private void SpawnPotions(int count)
+{
+    for (int i = 0; i < count; i++)
     {
-        for (int i = 0; i < count; i++)
+        Vector3 randomPotionPos = Vector3.zero;
+        bool validPositionFound = false;
+
+        while (!validPositionFound)
         {
-            Vector3 randomPotionPos = Vector3.zero;
-            bool validPositionFound = false;
+            // Get a random cell within the maze boundaries
+            int randomX = Random.Range(0, _mazeWidth);
+            int randomZ = Random.Range(0, _mazeDepth);
 
-            while (!validPositionFound)
+            MazeCell randomCell = _mazeGrid[randomX, randomZ];
+            randomPotionPos = randomCell.transform.position + new Vector3(0, 0.5f, 0); // Slightly above the ground
+
+            // Ensure the position is valid on the NavMesh
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPotionPos, out hit, 1.0f, NavMesh.AllAreas))
             {
-                // Get a random cell within the maze boundaries
-                int randomX = Random.Range(0, _mazeWidth);
-                int randomZ = Random.Range(0, _mazeDepth);
-
-                MazeCell randomCell = _mazeGrid[randomX, randomZ];
-                randomPotionPos = randomCell.transform.position;
-
-                // Ensure the position is valid on the NavMesh
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPotionPos, out hit, 1.0f, NavMesh.AllAreas))
-                {
-                    randomPotionPos = hit.position;
-                    validPositionFound = true;
-                }
+                randomPotionPos = hit.position;
+                validPositionFound = true;
             }
+        }
 
-            GameObject potion = Instantiate(potionPrefab, randomPotionPos, Quaternion.identity);
-            potion.tag = "Potion";
-            Debug.Log("Generated potions");
+        // Instantiate the potion prefab at the valid position
+        GameObject potion = Instantiate(potionPrefab, randomPotionPos, Quaternion.identity);
+        potion.tag = "Potion";
+        potions.Add(potion); // Add the potion to the list for tracking
+    }
+}
+
+private void SpawnCheese()
+{
+    totalCheeseCount = 0; // Reset the total cheese count
+    collectedCheeseCount = 0; // Reset the collected cheese count
+
+    // Loop through the maze grid and place cheese at regular intervals
+    for (int x = 0; x < _mazeWidth; x++)
+    {
+        for (int z = 0; z < _mazeDepth; z++)
+        {
+            // Place cheese in every other cell to create spacing
+            if (x % 2 == 0 && z % 2 == 0)
+            {
+                MazeCell cell = _mazeGrid[x, z];
+                Vector3 cheesePosition = cell.transform.position + new Vector3(0, 0.5f, 0); // Slightly above the ground
+
+                // Instantiate the cheese prefab
+                GameObject cheese = Instantiate(cheesePrefab, cheesePosition, Quaternion.identity);
+                cheese.tag = "Cheese";
+
+                Cheese.Add(cheese); // Add the cheese to the list for tracking
+                totalCheeseCount++; // Increment the total cheese count
+            }
+        }
+    }
+
+    Debug.Log($"Total cheese spawned: {totalCheeseCount}");
+}
+
+    public void CollectCheese()
+    {
+        collectedCheeseCount++; // Increment the collected cheese count
+        Debug.Log($"Cheese collected: {collectedCheeseCount}/{totalCheeseCount}");
+
+        // Check if all cheese has been collected
+        if (collectedCheeseCount >= totalCheeseCount)
+        {
+            Debug.Log("All cheese collected! You win!");
+            // Add logic to handle winning the game (e.g., show a victory screen)
         }
     }
 }
