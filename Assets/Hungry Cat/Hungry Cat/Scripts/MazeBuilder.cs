@@ -12,6 +12,8 @@ public class MazeBuilder : MonoBehaviour
     public GameObject player; 
     public GameObject npcPrefab, waypointsPrefab, potionsPrefab, cheesePrefab;
     public GameObject groundObject;
+
+    public GameObject mazePrefab;
     public int width;
     public int height;
 
@@ -29,10 +31,14 @@ public class MazeBuilder : MonoBehaviour
 
     [SerializeField] List<GameObject> cheese = new List<GameObject>(); // List to store spawned cheese
     int[,] map;
+    MazeCell[,] _mazeGrid; // Declare the _mazeGrid variable
 
     [SerializeField] public NavMeshSurface surface;
     [SerializeField] private float raycastHeight = 50f; 
     [SerializeField] private int maxAttempts = 1000; 
+
+     public int totalCheeseCount; // Total number of cheese pieces in the maze
+    public int collectedCheeseCount; // Number of cheese pieces collected by the player
 
     void Start() {
         if (groundObject == null) {
@@ -72,7 +78,15 @@ public class MazeBuilder : MonoBehaviour
 
   void GenerateMap() {
     map = new int[width, height];
-    InitialiseMaze();
+    CarveMaze(1, 1);
+
+    // Initialize _mazeGrid with MazeCell objects
+    _mazeGrid = new MazeCell[width, height];
+    for (int x = 0; x < width; x++) {
+        for (int z = 0; z < height; z++) {
+            _mazeGrid[x, z] = new MazeCell(); // Replace with actual MazeCell initialization logic
+        }
+    }
     CarveMaze(1, 1);
 
     int borderSize = 1;
@@ -274,6 +288,41 @@ public class MazeBuilder : MonoBehaviour
             } else {
                 Debug.LogWarning("Failed to find a valid NavMesh point for Cheese.");
             }
+        }
+    }
+
+        private void SpawnCheese()
+    {
+        totalCheeseCount = 0; // Reset the total cheese count
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                MazeCell cell = _mazeGrid[x, z];
+
+                // Spawn cheese in the center of each cell
+                Vector3 cheesePosition = cell.transform.position + new Vector3(0, 0.5f, 0); // Slightly above the ground
+                GameObject cheese = Instantiate(cheesePrefab, cheesePosition, Quaternion.identity);
+                cheese.tag = "Cheese";
+
+                totalCheeseCount++; // Increment the total cheese count
+            }
+        }
+
+        Debug.Log($"Total cheese spawned: {totalCheeseCount}");
+    }
+
+    public void CollectCheese()
+    {
+        collectedCheeseCount++; // Increment the collected cheese count
+        Debug.Log($"Cheese collected: {collectedCheeseCount}/{totalCheeseCount}");
+
+        // Check if all cheese has been collected
+        if (collectedCheeseCount >= totalCheeseCount)
+        {
+            Debug.Log("All cheese collected! You win!");
+            // Add logic to handle winning the game (e.g., show a victory screen)
         }
     }
 }

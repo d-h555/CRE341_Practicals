@@ -4,6 +4,7 @@ public class Potion : MonoBehaviour
 {
     public bool isDrank; // Flag to check if the potion is consumed
     public Transform player; // Reference to the player object
+    public Transform mouse; // Reference to the mouse object
     public float effectDuration = 15f; // Duration of the potion effect
     private float startTime; // Time when the potion effect started
 
@@ -25,6 +26,7 @@ public class Potion : MonoBehaviour
             startTime = Time.time; // Record the time when the potion is consumed
             isDrank = true; // Set the flag to true when the potion is consumed
             player.transform.localScale += new Vector3(0.6f, 0.6f, 0.6f); // Increase player size
+            mouse.transform.localScale += new Vector3(5f, 5f, 5f); // Increase mouse size
             
             Debug.Log("Potion effect applied!");
             Destroy(gameObject); // Destroy the potion after use
@@ -41,6 +43,7 @@ public class Potion : MonoBehaviour
             {
                 // Remove potion effect here
                 player.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f); // reset player size
+                mouse.transform.localScale -= new Vector3(10f, 10f, 10f); // reset mouse size
                 Debug.Log("Potion effect ended!");
                 isDrank = false; // Reset the flag
             }

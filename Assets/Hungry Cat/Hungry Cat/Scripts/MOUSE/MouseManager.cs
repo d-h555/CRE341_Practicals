@@ -35,7 +35,7 @@ namespace Mouse
         public float distanceFromTarget;
       
         public bool isPreformingAction;
-        public CharacterStats currentTarget;
+        public CharacterStats currentTarget; // Initialize this later in the code
         
         private void Awake()
         {

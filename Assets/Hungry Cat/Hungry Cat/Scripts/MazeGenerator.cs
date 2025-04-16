@@ -47,13 +47,17 @@ public class MazeGenerator : MonoBehaviour
 	[SerializeField] 
     List<GameObject> potions = new List<GameObject>();
 
-    // int numberOfCheese = 10;
-    // [SerializeField]
-    // List<GameObject> Cheese = new List<GameObject>();
+     int numberOfCheese = 10;
+     [SerializeField]
+    List<GameObject> Cheese = new List<GameObject>();
 
-
+    public int totalCheeseCount;
+    public int collectedCheeseCount;
     void Start()
     {
+        Debug.Log(_mazeCellPrefab != null ? "MazeCell prefab assigned" : "MazeCell prefab is null");
+
+        
         if (_useSeed)
         {
             Random.InitState(_seed);
@@ -342,6 +346,51 @@ public class MazeGenerator : MonoBehaviour
             GameObject potion = Instantiate(potionPrefab, randomPotionPos, Quaternion.identity);
             potion.tag = "Potion";
             Debug.Log("Generated potions");
+        }
+    }
+
+    private void SpawnCheese(int count)
+    {
+        // Ensure the cheese count is not greater than the number of cells in the maze
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 randomCheesePos = Vector3.zero;
+            bool validPositionFound = false;
+
+            while (!validPositionFound)
+            {
+                // Get a random cell within the maze boundaries
+                int randomX = Random.Range(0, _mazeWidth);
+                int randomZ = Random.Range(0, _mazeDepth);
+
+                MazeCell randomCell = _mazeGrid[randomX, randomZ];
+                randomCheesePos = randomCell.transform.position;
+
+                // Ensure the position is valid on the NavMesh
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomCheesePos, out hit, 1.0f, NavMesh.AllAreas))
+                {
+                    randomCheesePos = hit.position;
+                    validPositionFound = true;
+                }
+            }
+
+            GameObject cheese = Instantiate(potionPrefab, randomCheesePos, Quaternion.identity);
+            cheese.tag = "Cheese";
+            Debug.Log("Generated cheese");
+        }
+    }
+        
+public void CollectCheese()
+    {
+        collectedCheeseCount++; // Increment the collected cheese count
+        Debug.Log($"Cheese collected: {collectedCheeseCount}/{totalCheeseCount}");
+
+        // Check if all cheese has been collected
+        if (collectedCheeseCount >= totalCheeseCount)
+        {
+            Debug.Log("All cheese collected! You win!");
+            // Add logic to handle winning the game (e.g., show a victory screen)
         }
     }
 }
