@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class MouseActions : MonoBehaviour
+namespace Mouse
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+        public class MouseActions : ScriptableObject
     {
+        public string actionAnimation;
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    
     }
 }

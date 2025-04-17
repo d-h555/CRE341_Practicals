@@ -1,27 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class StateManager : MonoBehaviour
+namespace Mouse
 {
-    State currentState;
-    void Update()
+    public class StateManager : MonoBehaviour
     {
-        RunStateMachine();
-    }
-
-    private void RunStateMachine()
-    {
-        State nextState = currentState?.RunCurrentState();
-
-        if (nextState != null)
+        State currentState;
+        void Update()
         {
-           SwitchToTheNextState(nextState);
+            RunStateMachine();
         }
-    }
 
-        private void SwitchToTheNextState(State nextState)
+        private void RunStateMachine()
         {
-            currentState = nextState;
+            State nextState = currentState?.RunCurrentState();
+
+            if (nextState != null)
+            {
+            SwitchToTheNextState(nextState);
+            }
         }
-    
+
+            private void SwitchToTheNextState(State nextState)
+            {
+                currentState = nextState;
+            }
+        
+    }
 }

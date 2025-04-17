@@ -876,7 +876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -2082,7 +2082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -70.17102, y: 0.002105713}
+  m_AnchoredPosition: {x: -70.17102, y: 0.0020751953}
   m_SizeDelta: {x: 1063.7, y: 1089.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1104233162
@@ -3281,8 +3281,8 @@ MonoBehaviour:
   cheesePrefab: {fileID: 1602371511}
   groundObject: {fileID: 697948582}
   _mazeCellPrefab: {fileID: 5915453835183314732, guid: c98f73fe17449f04f8c3c943481fe03b, type: 3}
-  _mazeWidth: 15
-  _mazeDepth: 15
+  _mazeWidth: 10
+  _mazeDepth: 10
   _seed: 0
   _useSeed: 0
   maxAttempts: 1000
@@ -3782,7 +3782,6 @@ SceneRoots:
   - {fileID: 1226625826}
   - {fileID: 601760122}
   - {fileID: 332380489}
-  - {fileID: 1756674431}
   - {fileID: 1034443807}
   - {fileID: 5281460350194069478}
   - {fileID: 1674279791}
@@ -3791,3 +3790,4 @@ SceneRoots:
   - {fileID: 789803313}
   - {fileID: 520396394}
   - {fileID: 1682033500}
+  - {fileID: 1756674431}
