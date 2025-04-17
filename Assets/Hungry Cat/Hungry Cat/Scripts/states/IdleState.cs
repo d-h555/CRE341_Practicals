@@ -1,5 +1,6 @@
 using Mouse;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class IdleState : State
 {
@@ -14,8 +15,6 @@ public class IdleState : State
     public float waypointReachedThreshold = 1f; // Distance to consider the waypoint reached
     private int currentWaypointIndex = 0; // Index of the current waypoint
     private PlayerStats playerStats;
-
-    private MazeGenerator mazeGen;
 
     private void Start()
     {
