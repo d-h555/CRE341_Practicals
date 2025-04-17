@@ -23,12 +23,17 @@ public class FleeState : State
 
     private void Start()
     {
-        animator = GetComponent<Animator>(); // Initialize the Animator component
+        if(gameObject.GetComponent<Animator>() != null)
+        {
+            animator = GetComponent<Animator>(); // Initialize the Animator component
+        }
     }
 
     private void OnEnable()
     {
-        animator.SetBool("isRunning", true); // Set the "isRunning" animation flag to true when the state is enabled
+        if(animator){
+            animator.SetBool("isRunning", false); // Set the "isRunning" animation flag to false when the state is enabled
+        }
     }
 
     // This method is called when the state is running
