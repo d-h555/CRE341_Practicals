@@ -145,7 +145,6 @@ MonoBehaviour:
   maxSpeed: 10
   maxSight: 7
   player: {fileID: 100006, guid: 756b0c574f380324a85262e736c0418b, type: 3}
-  animator: {fileID: 5614914593127111982}
   wanderSpeed: 7
   wanderTime: 7
   fleeDistanceCurve:
@@ -167,7 +166,6 @@ GameObject:
   - component: {fileID: 8229508652156627635}
   - component: {fileID: 6176864864191355478}
   - component: {fileID: 5614914593127111982}
-  - component: {fileID: 6330198840474810313}
   - component: {fileID: 5777858729454236192}
   - component: {fileID: 8598979227032321616}
   - component: {fileID: 1883045408050682308}
@@ -317,31 +315,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6330198840474810313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8002980710249202204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4f4d8cab552cd4b915f81272f976f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 6676752819585148912}
-  navMeshAgent: {fileID: 8229508652156627635}
-  rb: {fileID: 8598979227032321616}
-  maximumDetectionAngle: 50
-  minimumDetectionAngle: -50
-  detectionRadius: 20
-  maxAttackRange: 1.5
-  currentRecoveryTime: 0
-  recoveryTime: 2
-  isPerformingAction: 0
-  distanceFromTarget: 0
-  isPreformingAction: 0
-  currentTarget: {fileID: 0}
 --- !u!114 &5777858729454236192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,7 +412,6 @@ MonoBehaviour:
   recoveryTime: 2
   isPerformingAction: 0
   distanceFromTarget: 0
-  isPreformingAction: 0
   currentTarget: {fileID: 0}
 --- !u!114 &-9201667050277436960
 MonoBehaviour:

@@ -10,8 +10,6 @@ public class FleeState : State
     public GameObject player; // Reference to the player GameObject
     NavMeshAgent agent; // Reference to the NavMeshAgent for movement
 
-    public Animator animator; // Reference to the Animator for controlling animations
-
     public float wanderSpeed; // Speed at which the mouse wanders when not fleeing
     public float wanderTime; // Time interval for changing the wandering direction
     private float timeToChangeDirection = 0; // Timer for changing the wandering direction
@@ -21,21 +19,11 @@ public class FleeState : State
 
     private GameObject playerPosition; // Cached reference to the player's position
 
-    private void Start()
-    {
-        animator = GetComponent<Animator>(); // Initialize the Animator component
-    }
-
-    private void OnEnable()
-    {
-        animator.SetBool("isRunning", true); // Set the "isRunning" animation flag to true when the state is enabled
-    }
-
     // This method is called when the state is running
     public override State RunCurrentState()
     {
-        // This method is not used in this state, but it must be implemented as part of the State class
-        return this; // Return the current state
+        
+        return this;
     }
 
     // This method is called every frame to handle the logic for this state

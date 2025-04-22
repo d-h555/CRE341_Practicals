@@ -23,8 +23,8 @@ public class EnemyLocomotionManager : MonoBehaviour
 
         private void Start()
         {
-            mouseManager.enabled = false;
-            rb.isKinematic = false;
+            mouseManager.enabled = true;
+            rb.isKinematic = true;
         }
     }
 }

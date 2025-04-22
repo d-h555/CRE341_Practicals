@@ -10,6 +10,12 @@ namespace Mouse
     
         AnimatorManager animatorManager;
 
+        
+        public int CurrentHealth // Public getter for currentHealth
+        {
+            get { return currentHealth; }
+        }
+
         private void Awake()
         {
             animatorManager = GetComponent<AnimatorManager>();

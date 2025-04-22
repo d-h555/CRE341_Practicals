@@ -1,58 +1,53 @@
-using Mouse;
 using UnityEngine;
-
+namespace Mouse
+{
 public class AttackState : State
 {
-    public ChaseState chaseState; // Reference to the state for pursuing the target
-    public override State RunCurrentState()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    // This method is called every frame to handle the logic for this state
-    public override State Tick(MouseManager mouseManager, EnemyStats enemyStats, AnimatorManager mouseAnimatorHandler)
-    {
-        // Calculate the distance from the target
-        mouseManager.distanceFromTarget = Vector3.Distance(mouseManager.currentTarget.transform.position, mouseManager.transform.position);
-
-        // Check if the attack cooldown is over and the target is within attack range
-        if (mouseManager.currentRecoveryTime <= 0 && mouseManager.distanceFromTarget <= mouseManager.maxAttackRange)
-        {
-            PerformAttack(mouseManager, mouseAnimatorHandler); // Perform the attack
-            return this; // Stay in the current state
-        }
-
-        // If the target is out of range, switch to the pursue target state
-        if (mouseManager.distanceFromTarget > mouseManager.maxAttackRange)
-        {
-            return chaseState;
-        }
-
-        // Return the current state as a fallback
-        return this;
-    }
-
-    // Simple attack function
-    private void PerformAttack(MouseManager mouseManager, AnimatorManager mouseAnimatorHandler)
-    {
-        if (mouseManager.isPerformingAction) return; // Prevent multiple attacks if already performing an action
-
-        // Set the recovery time for the next attack
-        mouseManager.currentRecoveryTime = mouseManager.recoveryTime;
-
-        // Set the performing action flag to true
-        mouseManager.isPerformingAction = true;
-
-          // Cause damage to the player
-         if (mouseManager.currentTarget != null)
-         {
-            PlayerStats playerStats = mouseManager.currentTarget.GetComponent<PlayerStats>();
-            if (playerStats != null)
+            public ChaseState chaseState; // Reference to the chase state
+            public override State RunCurrentState()
             {
-                  playerStats.TakeDamage(10); // Deal 10 damage to the player
+                throw new System.NotImplementedException();
             }
-         }
 
-        Debug.Log("Attack performed!"); // Debug message to indicate an attack was performed
+public override State Tick(MouseManager mouseManager, EnemyStats enemyStats, AnimatorManager animatorHandler)
+{
+    // Add logic to determine the next state or return null as a fallback
+    PerformAttack(mouseManager, null); // Assuming null for MouseAnimatorHandler for now
+    return chaseState; // Return the chaseState as the next state
+}
+
+        private void PerformAttack(MouseManager mouseManager, MouseAnimatorHandler mouseAnimatorHandler)
+        {
+            if (mouseManager.isPerformingAction)
+            {
+                Debug.Log("Already performing an action. Attack skipped.");
+                return; // Prevent multiple attacks if already performing an action
+            }
+
+            // Set the recovery time for the next attack
+            mouseManager.currentRecoveryTime = mouseManager.recoveryTime;
+
+            // Set the performing action flag to true
+            mouseManager.isPerformingAction = true;
+
+            // Cause damage to the player
+            if (mouseManager.currentTarget != null)
+            {
+                PlayerStats playerStats = mouseManager.currentTarget.GetComponent<PlayerStats>();
+                if (playerStats != null)
+                {
+                    playerStats.TakeDamage(10); // Deal 10 damage to the player
+                    Debug.Log($"Dealt 10 damage to {playerStats.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("PlayerStats component not found on the target.");
+                }
+            }
+
+            // Reset the performing action flag after the attack animation or delay
+            mouseManager.isPerformingAction = false;
+            Debug.Log("Attack performed!");
+        }
     }
 }

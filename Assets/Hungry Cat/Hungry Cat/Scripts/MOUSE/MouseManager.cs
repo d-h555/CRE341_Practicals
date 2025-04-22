@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 namespace Mouse
 {
@@ -32,6 +33,8 @@ namespace Mouse
         private PlayerStats playerStats; // Reference to the PlayerStats script
         public PlayerStats currentTarget; // Reference to the current target
 
+        MouseManager mouseManager; // Reference to the MouseManager script
+
         private void Awake()
         {
             // Initialize references to required components
@@ -45,7 +48,7 @@ namespace Mouse
 
         private void Start()
         {
-            // Initialize any required logic here
+            mouseManager.enabled = true; // Enable the MouseManager script
         }
 
         private void FixedUpdate()
